@@ -1,0 +1,2 @@
+pandas==1.5.1
+dataframe_image==0.1.3
