@@ -25,7 +25,7 @@ age_groups = [
         (50, 54),
         (55, 59),
         (60, 64),
-        (65, 88), #1934 is the earliest year in HPS
+        (65, 88), #1934 is the earliest birth year in HPS
         ]
 
 def n(df):
@@ -34,7 +34,7 @@ def n(df):
 
 index = []
 stats = []
-for i, age_group in enumerate(age_groups):
+for age_group in age_groups:
     lower = age_group[0]
     upper = age_group[1]
     year_max = year - lower

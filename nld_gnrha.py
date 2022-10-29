@@ -63,15 +63,23 @@ m_minors_gnrha_2009_2015 = table_1.at['2009_2015', 'transwomen']
 # compute child and adolescent population through years 1987-2015
 population = pd.read_csv(f"./data/{pop_source}", sep=";")
 year_ranges = [
-        (1987, 2015),
-        (2009, 2015)
+        #start, end, cumulative
+        (1987, 2015, False),
+        (2009, 2015, False),
+        (1987, 2015, True),
+        (2009, 2015, True),
         ]
 
 index = []
 stats = []
 formatter = {}
 for r in year_ranges:
-    years = year_codes(r[0], r[1])
+    # use a year_codes for yearly mean prevalence
+    # years = year_codes(r[0], r[1]) 
+    
+    # use the period start as the denominator for cumulative incidence
+    years = [f"{r[0]}JJ00"] if r[2] else year_codes(r[0], r[1])
+
     cohort = population[population.Periods.isin(years) & population.Age.isin(ages)]
     males = cohort.query(f"Sex == '{male}'")
     females = cohort.query(f"Sex == '{female}'")
@@ -83,33 +91,34 @@ for r in year_ranges:
     row["total"] = total_sum
     row["female"] = f_sum
     row["male"] = m_sum
-    row_name = f"9_17_pop_{r[0]}_{r[1]}"
+    row_name = f"9_17_pop_{r[0]}_{r[1]}" if len(years) > 1 else f"9_17_pop_{r[0]}"
     index.append(row_name)
     stats.append(row)
     formatter[row_name] = "{:,.0f}"
 
-    gnrha_row = {}
-    if r[0] == 1987:
-        gnrha_row['total'] = total_minors_gnrha
-        gnrha_row['female'] = f_minors_gnrha
-        gnrha_row['male'] = m_minors_gnrha
+    if r[2] == False:
+        gnrha_row = {}
+        if r[0] == 1987:
+            gnrha_row['total'] = total_minors_gnrha
+            gnrha_row['female'] = f_minors_gnrha
+            gnrha_row['male'] = m_minors_gnrha
 
-    if r[0] == 2009:
-        gnrha_row['total'] = total_minors_gnrha_2009_2015
-        gnrha_row['female'] = f_minors_gnrha_2009_2015
-        gnrha_row['male'] = m_minors_gnrha_2009_2015
+        if r[0] == 2009:
+            gnrha_row['total'] = total_minors_gnrha_2009_2015
+            gnrha_row['female'] = f_minors_gnrha_2009_2015
+            gnrha_row['male'] = m_minors_gnrha_2009_2015
 
-    stats.append(gnrha_row)
-    gnrha_row_name = f"gnrha_n_{r[0]}_{r[1]}"
-    index.append(gnrha_row_name)
-    formatter[gnrha_row_name] = "{:,.0f}"
+        stats.append(gnrha_row)
+        gnrha_row_name = f"gnrha_n_{r[0]}_{r[1]}"
+        index.append(gnrha_row_name)
+        formatter[gnrha_row_name] = "{:,.0f}"
 
     rate = {}
     rate['total'] = (gnrha_row['total'] / total_sum) * 100000
     rate['female'] = (gnrha_row['female'] / f_sum) * 100000
     rate['male'] = (gnrha_row['male'] / m_sum) * 100000
     stats.append(rate)
-    rate_name = f"gnrha_rate_per_100k_{r[0]}_{r[1]}"
+    rate_name = f"yearly_mean_gnrha_per_100k_{r[0]}_{r[1]}" if len(years) > 1 else f"cumulative_gnrha_per_100k_{r[0]}_{r[1]}"
     index.append(rate_name)
     formatter[rate_name] = "{:.2f}"
 

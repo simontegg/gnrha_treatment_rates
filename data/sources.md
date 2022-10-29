@@ -1,4 +1,9 @@
 
+
+[bell_v_tavistock_p29.csv](https://www.judiciary.uk/wp-content/uploads/2022/07/Bell-v-Tavistock-Judgment.pdf)
+
+[18-19333_tavistock_nhs.csv](https://tavistockandportman.nhs.uk/documents/1431/FOI_18-19333_Gender_Dysphoria_Treatment_2012-18.pdf)
+
 [table_1_wiepjes_et_al_2018.csv](dx.doi.org/10.1016/j.jsxm.2018.01.016)
 
 [7461eng_TypedDataSet_29102022_160841.csv](https://opendata.cbs.nl/statline/portal.html?_la=en&_catalog=CBS&tableId=7461eng&_theme=1123)
