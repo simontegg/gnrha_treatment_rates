@@ -83,6 +83,8 @@ formatter = {
 # plt.show()
 
 plt.savefig(f"./results/{name}_chart.png")
+
+## TODO full figures with 2012, 2013
 df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 
 styled = df.style.format(formatter=formatter)
