@@ -91,15 +91,15 @@ pop_0_17.columns = pop_0_17.columns.droplevel()
 df = gnrha.sum(axis=1).to_frame().unstack().fillna(value=0).reset_index(level=0, drop=True)
 df.columns = df.columns.droplevel()
 
-df["total_gnrha"] = df.sum(axis=1)
-df["pop_f_0_17"] = female_pop_0_17.sum(axis=1)
-df["pop_m_0_17"] = male_pop_0_17.sum(axis=1)
+df["total_gnrha"] = pd.to_numeric(df.sum(axis=1), downcast="integer")
+df["pop_f_0_17"] = pd.to_numeric(female_pop_0_17.sum(axis=1), downcast="integer")
+df["pop_m_0_17"] = pd.to_numeric(male_pop_0_17.sum(axis=1), downcast="integer")
 df["pop_0_17"] = pop_0_17.sum(axis=1)
-df["rate_per_100k"] = (df["total_gnrha"] / df["pop_0_17"]) * 100000
 df["m_rate_per_100k"] = (df["Male"] / df["pop_m_0_17"]) * 100000
 df["f_rate_per_100k"] = (df["Female"] / df["pop_f_0_17"]) * 100000
+df["rate_per_100k"] = (df["total_gnrha"] / df["pop_0_17"]) * 100000
 df["mean_rate_2006_2009"] = df.loc["2006-07-01":"2009-07-01", "rate_per_100k"].mean() 
-df['cpp_other_n'] = round((df['mean_rate_2006_2009'] / 100000) * df['pop_0_17'])
+df['cpp_other_n'] = pd.to_numeric(round((df['mean_rate_2006_2009'] / 100000) * df['pop_0_17']), downcast="integer")
 df['total_excess'] = (df['total_gnrha'] - df['cpp_other_n'])
 df['total_gnrha_gd'] = df["total_excess"]
 df.loc["2006-07-01":"2009-07-01", "total_gnrha_gd"] = 0
