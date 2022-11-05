@@ -35,17 +35,10 @@ gnrha = gnrha.sort_index(ascending=True)
 gnrha = gnrha.sort_index(axis=1, ascending=True) 
 gnrha = gnrha.fillna(0)
 
-
-# df.loc[df['Population(B)'] < 1] = 0
-# mask = gnrha.loc[:,('A','one')].ge(0)
-
 # Assume reported patients '< 10' with 'Unknown' sex was 1  
 unknown = gnrha.query("gender == 'Unknown'")
 unknown = unknown.replace("< 10", 1)
 gnrha.update(unknown)
-# gnrha[unknown] = 1
-
-
 
 # Assume reported patients '< 10' with 'Gender diverse' sex was 1  
 gd = gnrha.query("gender == 'Gender diverse'")
@@ -54,6 +47,8 @@ gnrha.update(gd)
 
 # Assume all other '< 10' are 1 
 gnrha = gnrha.replace("< 10", 5)
+
+gnrha = gnrha.astype(int)
 
 
 pop = pd.read_csv(
