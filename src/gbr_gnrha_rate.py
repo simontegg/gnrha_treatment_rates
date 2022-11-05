@@ -38,6 +38,8 @@ females['total'] = females.sum(axis=1)
 total = males['total'] + females['total'] 
 
 
+
+
 gnrha_yearly_source = '18-19333_tavistock_nhs.csv'
 gnrha = pd.read_csv(f"./data/{gnrha_yearly_source}")
 
@@ -49,6 +51,7 @@ gnrha['prevalence'] = gnrha['gnrha_referrals_lt_15'].rolling(
 
 df = gnrha[gnrha['year'] > 2013]
 df['pop_9_14'] = total.tolist()
+
 df['gnrha_per_100k_9_14'] = (df['prevalence'] / df['pop_9_14']) * 100000
 df['year'] = pd.date_range(start="2014-01-01", end="2018-01-01", freq="AS")
 
@@ -90,7 +93,66 @@ df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 styled = df.style.format(formatter=formatter)
 dfi.export(styled, f"results/{name}_table.png")
 
-print(df)
+# print(df)
+
+males_9_17 = eng_wls.loc[
+        (2008, "England and Wales"):(2020, "England and Wales"), 
+        ("M", 9):("M", 17)
+        ]
+
+females_9_17 = eng_wls.loc[
+        (2008, "England and Wales"):(2020, "England and Wales"), 
+        ("F", 9):("F", 14)
+        ]
+
+
+
+pop_m_2008 = males_9_17.loc[(2008, "England and Wales"), :].sum()
+pop_f_2008 = females_9_17.loc[(2008, "England and Wales"), :].sum()
+pop_total_2008 = pop_m_2008 + pop_f_2008
+
+cum_df = pd.DataFrame({
+    'pop_2008_9_17': [pop_total_2008, pop_f_2008, pop_m_2008],
+    'gnrha_gd_2008_2021': [1014, None, None],
+    'cum_rate_per_9_17_100k': [(1014 / pop_total_2008) * 100000, None, None]
+    },
+    index=["total", "female", "male"])
+
+cum_df.to_csv(f"./results/{name}_cumulative.csv", float_format="%.2f")
+
+
+print(cum_df)
+
+
+
+# females_10_19 = eng_wls.loc[
+#         (2020, "England and Wales"), 
+#         ("F", 10):("F", 19)
+#         ]
+
+# males_10_19 = eng_wls.loc[
+#         (2020, "England and Wales"), 
+#         ("M", 10):("M", 19)
+#         ]
+
+# females_10_19_sum = females_10_19.sum()
+# males_10_19_sum = males_10_19.sum()
+
+
+
+# total_2020_10_19 = females_10_19_sum + males_10_19_sum
+
+# ONS https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationandhouseholdestimatesenglandandwalescensus2021
+# pop_10_14_2021 = 3595900
+# pop_15_19_2021 = 3394700
+# total_2021_10_19 = pop_10_14_2021 + pop_15_19_2021
+# multiplier = total_2021_10_19 / total_2020_10_19
+
+# print(total_2020_10_19)
+# print(total_2021_10_19)
+# print(multiplier)
+
+
 
 
 
