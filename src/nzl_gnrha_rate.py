@@ -110,7 +110,9 @@ def incidence_from_prevalence(series, window):
 df['3yr_duration_incidence'] = incidence_from_prevalence(df['total_gnrha_gd'], 3)
 df['4yr_duration_incidence'] = incidence_from_prevalence(df['total_gnrha_gd'], 4)
 df['5yr_duration_incidence'] = incidence_from_prevalence(df['total_gnrha_gd'], 5)
-df['cumsum'] = df['3yr_duration_incidence'].cumsum()
+df['cumsum_3'] = df['3yr_duration_incidence'].cumsum()
+df['cumsum_4'] = df['4yr_duration_incidence'].cumsum()
+df['cumsum_5'] = df['5yr_duration_incidence'].cumsum()
 df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
 df['pop_period_start'] = df.loc["2010-07-01", "pop_9_17"]
 df.loc["2006-07-01":"2009-7-01", 'pop_period_start'] = None
