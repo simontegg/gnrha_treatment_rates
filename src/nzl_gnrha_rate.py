@@ -117,7 +117,7 @@ df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
 df['pop_period_start'] = df.loc["2010-07-01", "pop_9_17"]
 df.loc["2006-07-01":"2009-7-01", 'pop_period_start'] = None
 
-df['cum_inc_per_9_17_100k'] = (df['cumsum'] / df['pop_period_start']) * 100000
+df['cum_inc_per_9_17_100k'] = (df['cumsum_3'] / df['pop_period_start']) * 100000
 df['prev_per_9_17_100k'] = (df['total_gnrha_gd'] / df['pop_9_17']) * 100000
 
 
