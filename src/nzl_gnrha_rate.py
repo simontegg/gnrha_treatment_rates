@@ -114,16 +114,47 @@ df['cumsum_3'] = df['3yr_duration_incidence'].cumsum()
 df['cumsum_4'] = df['4yr_duration_incidence'].cumsum()
 df['cumsum_5'] = df['5yr_duration_incidence'].cumsum()
 df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
-df['pop_period_start'] = df.loc["2010-07-01", "pop_9_17"]
+df['pop_period_start_2008'] = df.loc["2008-07-01", "pop_9_17"]
+df['pop_period_start_2009'] = df.loc["2009-07-01", "pop_9_17"]
 df.loc["2006-07-01":"2009-7-01", 'pop_period_start'] = None
 
-df['cum_inc_per_9_17_100k'] = (df['cumsum_3'] / df['pop_period_start']) * 100000
+df['cum_3yr_inc_per_9_17_100k_2008'] = (df['cumsum_3'] / df['pop_period_start_2008']) * 100000
+df['cum_3yr_inc_per_9_17_100k_2009'] = (df['cumsum_3'] / df['pop_period_start_2009']) * 100000
+df['cum_4yr_inc_per_9_17_100k_2008'] = (df['cumsum_4'] / df['pop_period_start_2008']) * 100000
+df['cum_4yr_inc_per_9_17_100k_2009'] = (df['cumsum_4'] / df['pop_period_start_2008']) * 100000
+
+
+
+
 df['prev_per_9_17_100k'] = (df['total_gnrha_gd'] / df['pop_9_17']) * 100000
 
 
 df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 
-print(df)
+
+## Figures and Tables
+
+seaborn.set_theme()
+
+df1 = pd.DataFrame({
+                        'total_gnrha': df['total_gnrha'].tolist()
+                    },
+                    index=pd.to_datetime([f"{y}-01-01" for y in range(2007, 2022)]))
+df1.index.name = 'year'
+
+print(df1)
+
+seaborn.lineplot(x='year', y='total_gnrha', data=df1)
+plt.xlabel(None)
+plt.ylabel(None)
+plt.ylim([0, 700])
+
+df1.style
+# dfi.export(df1, 'df_styled.png')
+
+
+# plt.show()
+
 
 
 
