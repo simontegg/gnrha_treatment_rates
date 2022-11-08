@@ -96,8 +96,8 @@ for r in year_ranges:
     stats.append(row)
     formatter[row_name] = "{:,.0f}"
 
+    gnrha_row = {}
     if r[2] == False:
-        gnrha_row = {}
         if r[0] == 1987:
             gnrha_row['total'] = total_minors_gnrha
             gnrha_row['female'] = f_minors_gnrha
@@ -113,14 +113,14 @@ for r in year_ranges:
         index.append(gnrha_row_name)
         formatter[gnrha_row_name] = "{:,.0f}"
 
-    rate = {}
-    rate['total'] = (gnrha_row['total'] / total_sum) * 100000
-    rate['female'] = (gnrha_row['female'] / f_sum) * 100000
-    rate['male'] = (gnrha_row['male'] / m_sum) * 100000
-    stats.append(rate)
-    rate_name = f"yearly_mean_gnrha_per_100k_{r[0]}_{r[1]}" if len(years) > 1 else f"cumulative_gnrha_per_100k_{r[0]}_{r[1]}"
-    index.append(rate_name)
-    formatter[rate_name] = "{:.2f}"
+        rate = {}
+        rate['total'] = (gnrha_row['total'] / total_sum) * 100000
+        rate['female'] = (gnrha_row['female'] / f_sum) * 100000
+        rate['male'] = (gnrha_row['male'] / m_sum) * 100000
+        stats.append(rate)
+        rate_name = f"yearly_mean_gnrha_per_100k_{r[0]}_{r[1]}" if len(years) > 1 else f"cumulative_gnrha_per_100k_{r[0]}_{r[1]}"
+        index.append(rate_name)
+        formatter[rate_name] = "{:.2f}"
 
 
 df = pd.DataFrame(stats, index=index)
