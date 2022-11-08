@@ -121,7 +121,7 @@ df.loc["2006-07-01":"2009-7-01", 'pop_period_start'] = None
 df['cum_3yr_inc_per_9_17_100k_2008'] = (df['cumsum_3'] / df['pop_period_start_2008']) * 100000
 df['cum_3yr_inc_per_9_17_100k_2009'] = (df['cumsum_3'] / df['pop_period_start_2009']) * 100000
 df['cum_4yr_inc_per_9_17_100k_2008'] = (df['cumsum_4'] / df['pop_period_start_2008']) * 100000
-df['cum_4yr_inc_per_9_17_100k_2009'] = (df['cumsum_4'] / df['pop_period_start_2008']) * 100000
+df['cum_4yr_inc_per_9_17_100k_2009'] = (df['cumsum_4'] / df['pop_period_start_2009']) * 100000
 
 
 
