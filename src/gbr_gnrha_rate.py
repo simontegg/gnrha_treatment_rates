@@ -4,7 +4,6 @@ import dataframe_image as dfi
 import seaborn
 
 import matplotlib.dates as mdates
-from datetime import date
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 

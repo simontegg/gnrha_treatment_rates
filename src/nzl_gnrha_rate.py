@@ -136,24 +136,59 @@ df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 
 seaborn.set_theme()
 
+y_years = pd.to_datetime([f"{y}-01-01" for y in range(2007, 2022)])
+
 df1 = pd.DataFrame({
                         'total_gnrha': df['total_gnrha'].tolist()
                     },
-                    index=pd.to_datetime([f"{y}-01-01" for y in range(2007, 2022)]))
+                    index=y_years)
+
 df1.index.name = 'year'
 
 print(df1)
 
-seaborn.lineplot(x='year', y='total_gnrha', data=df1)
+df2 = pd.DataFrame({
+        'total_gnrha': df['total_gnrha'].tolist(),
+        'modeled_cpp_other': df['cpp_other_n'].tolist(),
+        'total_gnrha_gd':  df['total_gnrha_gd'].tolist()
+    }, index=y_years)
+
+
+df3 = pd.DataFrame({
+    '3yr_duration_incidence': df['3yr_duration_incidence'].tolist(),
+    '4yr_duration_incidence': df['4yr_duration_incidence'].tolist(),
+    '3yr_cumumative_inc': df['cumsum_3'].tolist(),
+    '4yr_cumumative_inc': df['cumsum_4'].tolist(),
+    }, index=y_years)
+
+df4 = pd.DataFrame({
+    'f_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:9].sum(axis=1).tolist(),
+    'f_10_15': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 10:15].sum(axis=1).tolist(),
+    'f_16_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 16:17].sum(axis=1).tolist(),
+    'm_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:9].sum(axis=1).tolist(),
+    'm_10_15': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 10:15].sum(axis=1).tolist(),
+    'm_16_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 16:17].sum(axis=1).tolist(),
+
+
+    }, index=y_years)
+
+print(df4)
+
+df4.to_csv(f"./results/nzl_gnrha_age_sex.csv")
+
+
+# seaborn.lineplot(x='year', y='total_gnrha', data=df1)
+# seaborn.lineplot(data=df2)
+seaborn.lineplot(data=df4)
 plt.xlabel(None)
 plt.ylabel(None)
-plt.ylim([0, 700])
+plt.ylim([0, 250])
 
-df1.style
+# df1.style
 # dfi.export(df1, 'df_styled.png')
 
 
-# plt.show()
+plt.show()
 
 
 
