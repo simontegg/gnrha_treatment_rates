@@ -60,6 +60,11 @@ total_minors_gnrha_2009_2015 = table_1.at['2009_2015', 'total']
 f_minors_gnrha_2009_2015 = table_1.at['2009_2015', 'transmen']
 m_minors_gnrha_2009_2015 = table_1.at['2009_2015', 'transwomen']
 
+
+total_minors_gnrha_2009_2018 = 720 + 229 - 118
+f_minors_gnrha_2009_2018 = int((500/720) * total_minors_gnrha_2009_2015)
+m_minors_gnrha_2009_2018 = int((220/720) * total_minors_gnrha_2009_2015)
+
 # compute child and adolescent population through years 1987-2015
 population = pd.read_csv(f"./data/{pop_source}", sep=";")
 year_ranges = [
@@ -68,6 +73,8 @@ year_ranges = [
         (2009, 2015, False),
         (1987, 2015, True),
         (2009, 2015, True),
+        (2009, 2018, False),
+        (2009, 2018, True),
         ]
 
 index = []
@@ -102,10 +109,15 @@ for r in year_ranges:
         gnrha_row['female'] = f_minors_gnrha
         gnrha_row['male'] = m_minors_gnrha
 
-    if r[0] == 2009:
+    if r[0] == 2009 and r[1] == 2015:
         gnrha_row['total'] = total_minors_gnrha_2009_2015
         gnrha_row['female'] = f_minors_gnrha_2009_2015
         gnrha_row['male'] = m_minors_gnrha_2009_2015
+
+    if r[0] == 2009 and r[1] == 2018:
+        gnrha_row['total'] = total_minors_gnrha_2009_2018
+        gnrha_row['female'] = f_minors_gnrha_2009_2018
+        gnrha_row['male'] = m_minors_gnrha_2009_2018
 
     stats.append(gnrha_row)
     gnrha_row_name = f"gnrha_n_{r[0]}_{r[1]}"
