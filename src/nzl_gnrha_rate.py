@@ -83,7 +83,9 @@ pop_0_17.columns = pop_0_17.columns.droplevel()
 df = gnrha.sum(axis=1).to_frame().unstack().fillna(value=0).reset_index(level=0, drop=True)
 df.columns = df.columns.droplevel()
 
+
 df["total_gnrha"] = pd.to_numeric(df.sum(axis=1), downcast="integer")
+
 df["pop_f_0_17"] = pd.to_numeric(female_pop_0_17.sum(axis=1), downcast="integer")
 df["pop_m_0_17"] = pd.to_numeric(male_pop_0_17.sum(axis=1), downcast="integer")
 df["pop_0_17"] = pop_0_17.sum(axis=1)
@@ -107,6 +109,9 @@ def incidence_from_prevalence(series, window):
 
     return incidences
 
+
+
+
 df['3yr_duration_incidence'] = incidence_from_prevalence(df['total_gnrha_gd'], 3)
 df['4yr_duration_incidence'] = incidence_from_prevalence(df['total_gnrha_gd'], 4)
 df['5yr_duration_incidence'] = incidence_from_prevalence(df['total_gnrha_gd'], 5)
@@ -116,7 +121,7 @@ df['cumsum_5'] = df['5yr_duration_incidence'].cumsum()
 df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
 df['pop_period_start_2008'] = df.loc["2008-07-01", "pop_9_17"]
 df['pop_period_start_2009'] = df.loc["2009-07-01", "pop_9_17"]
-df.loc["2006-07-01":"2009-7-01", 'pop_period_start'] = None
+
 
 df['cum_3yr_inc_per_9_17_100k_2008'] = (df['cumsum_3'] / df['pop_period_start_2008']) * 100000
 df['cum_3yr_inc_per_9_17_100k_2009'] = (df['cumsum_3'] / df['pop_period_start_2009']) * 100000
@@ -145,7 +150,7 @@ df1 = pd.DataFrame({
 
 df1.index.name = 'year'
 
-print(df1)
+# print(df1)
 
 df2 = pd.DataFrame({
         'total_gnrha': df['total_gnrha'].tolist(),
@@ -172,7 +177,7 @@ df4 = pd.DataFrame({
 
     }, index=y_years)
 
-print(df4)
+# print(df4)
 
 df4.to_csv(f"./results/nzl_gnrha_age_sex.csv")
 
@@ -188,7 +193,7 @@ plt.ylim([0, 250])
 # dfi.export(df1, 'df_styled.png')
 
 
-plt.show()
+# plt.show()
 
 
 

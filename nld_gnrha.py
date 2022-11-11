@@ -62,8 +62,8 @@ m_minors_gnrha_2009_2015 = table_1.at['2009_2015', 'transwomen']
 
 
 total_minors_gnrha_2009_2018 = 720 + 229 - 118
-f_minors_gnrha_2009_2018 = int((500/720) * total_minors_gnrha_2009_2015)
-m_minors_gnrha_2009_2018 = int((220/720) * total_minors_gnrha_2009_2015)
+f_minors_gnrha_2009_2018 = int((500/720) * total_minors_gnrha_2009_2018)
+m_minors_gnrha_2009_2018 = int((220/720) * total_minors_gnrha_2009_2018)
 
 # compute child and adolescent population through years 1987-2015
 population = pd.read_csv(f"./data/{pop_source}", sep=";")
