@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from numpy import cumsum
 import pandas as pd
 import dataframe_image as dfi
 import seaborn
@@ -121,6 +122,11 @@ df['cumsum_5'] = df['5yr_duration_incidence'].cumsum()
 df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
 df['pop_period_start_2008'] = df.loc["2008-07-01", "pop_9_17"]
 df['pop_period_start_2009'] = df.loc["2009-07-01", "pop_9_17"]
+df['pop_period_start_2017'] = df.loc["2017-07-01", "pop_9_17"]
+
+
+
+
 
 
 df['cum_3yr_inc_per_9_17_100k_2008'] = (df['cumsum_3'] / df['pop_period_start_2008']) * 100000
@@ -128,6 +134,10 @@ df['cum_3yr_inc_per_9_17_100k_2009'] = (df['cumsum_3'] / df['pop_period_start_20
 df['cum_4yr_inc_per_9_17_100k_2008'] = (df['cumsum_4'] / df['pop_period_start_2008']) * 100000
 df['cum_4yr_inc_per_9_17_100k_2009'] = (df['cumsum_4'] / df['pop_period_start_2009']) * 100000
 
+
+df['cumsum_3_2017_2021'] = df.loc['2016-07-01':'2020-07-01', '3yr_duration_incidence'].cumsum()
+
+df['cum_3yr_inc_per_9_17_100k_2017'] = (df['cumsum_3_2017_2021'] / df['pop_period_start_2017']) * 100000
 
 
 
