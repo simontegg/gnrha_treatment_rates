@@ -13,7 +13,7 @@ pop = pop.drop('Urban-rural classification', axis=1)
 total_pop_2011_9_17 = pop.iloc[0,9:18].sum()
 
 
-upper_limit_2011_2018 = 186
+upper_limit_2011_2018 = (124 * 1.5) - 52
 
 print((upper_limit_2011_2018 / total_pop_2011_9_17) * 100000)
 

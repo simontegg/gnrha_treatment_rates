@@ -180,9 +180,11 @@ df4 = pd.DataFrame({
     'f_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:9].sum(axis=1).tolist(),
     'f_10_15': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 10:15].sum(axis=1).tolist(),
     'f_16_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 16:17].sum(axis=1).tolist(),
+    'f_0_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:17].sum(axis=1).tolist(),
     'm_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:9].sum(axis=1).tolist(),
     'm_10_15': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 10:15].sum(axis=1).tolist(),
     'm_16_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 16:17].sum(axis=1).tolist(),
+    'm_0_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:17].sum(axis=1).tolist(),
 
 
     }, index=y_years)
@@ -194,16 +196,28 @@ df4.to_csv(f"./results/nzl_gnrha_age_sex.csv")
 
 # seaborn.lineplot(x='year', y='total_gnrha', data=df1)
 # seaborn.lineplot(data=df2)
-seaborn.lineplot(data=df4)
+seaborn.lineplot(x="year", y='f_0_17', data=df4, color="#1f78b4", linestyle="solid", label="Females 0-17")
+seaborn.lineplot(x="year", y='f_16_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 16-17")
+seaborn.lineplot(x="year", y='f_10_15', data=df4, color="#1f78b4", linestyle="dashdot", label="Females 10-15")
+seaborn.lineplot(x="year", y='f_0_9', data=df4, color="#1f78b4", linestyle="dotted", label="Females 0-9")
+seaborn.lineplot(x="year", y='m_0_17', data=df4, color="#e31a1c", linestyle="solid", label="Males 0-17")
+seaborn.lineplot(x="year", y='m_16_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 16-17")
+seaborn.lineplot(x="year", y='m_10_15', data=df4, color="#e31a1c", linestyle="dashdot", label="Males 10-15")
+seaborn.lineplot(x="year", y='m_0_9', data=df4, color="#e31a1c", linestyle="dotted", label="Males 0-9")
 plt.xlabel(None)
 plt.ylabel(None)
-plt.ylim([0, 250])
+plt.ylim([0, 450])
+plt.legend(loc='upper left')
+
+
+
+
 
 # df1.style
 # dfi.export(df1, 'df_styled.png')
 
 
-# plt.show()
+plt.show()
 
 
 
