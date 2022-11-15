@@ -10,9 +10,9 @@ referred = pd.read_csv(f"./data/{source}")
 
 lt_18 = referred.query('age < 18')
 
-started_gnrha = ["A1", "A3", "B2", "B3"]
-possibly_started_gnrha = ["A4", "A6", "C2", "C3"]
-did_not_start_gnrha = ["A2", "A5", "A7", "A8", "B1", "C1"]
+started_gnrha = ["A1", "A3", "A4", "A5", "A6", "B2", "B3"]
+possibly_started_gnrha = ["C2", "C3"]
+did_not_start_gnrha = ["A2", "A7", "A8", "B1", "C1"]
 
 started = started_gnrha + possibly_started_gnrha
 
