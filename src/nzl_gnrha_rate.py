@@ -183,17 +183,17 @@ df3 = pd.DataFrame({
 
 df4 = pd.DataFrame({
     'f_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:9].sum(axis=1).tolist(),
-    'f_10_12': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 10:12].sum(axis=1).tolist(),
-    'f_13_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 13:17].sum(axis=1).tolist(),
+    'f_10_11': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 10:11].sum(axis=1).tolist(),
+    'f_12_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 12:17].sum(axis=1).tolist(),
     'm_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:9].sum(axis=1).tolist(),
-    'm_10_12': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 10:12].sum(axis=1).tolist(),
-    'm_13_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 13:17].sum(axis=1).tolist(),
+    'm_10_11': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 10:11].sum(axis=1).tolist(),
+    'm_12_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 12:17].sum(axis=1).tolist(),
 
     }, index=y_years)
 
 # print(df4)
 
-df4.to_csv(f"./results/nzl_gnrha_age_sex.csv")
+df4.to_csv(f"./results/nzl_gnrha_age_sex_alt.csv")
 
 
 # seaborn.lineplot(x='year', y='total_gnrha', data=df1)
@@ -210,14 +210,14 @@ df4.to_csv(f"./results/nzl_gnrha_age_sex.csv")
 
 
 # Fig 2
-seaborn.lineplot(x="year", y='f_13_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 13-17")
-seaborn.lineplot(x="year", y='f_10_12', data=df4, color="#1f78b4", linestyle="solid", label="Females 10-12")
+seaborn.lineplot(x="year", y='f_12_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 12-17")
+seaborn.lineplot(x="year", y='f_10_11', data=df4, color="#1f78b4", linestyle="solid", label="Females 10-11")
 seaborn.lineplot(x="year", y='f_0_9', data=df4, color="#1f78b4", linestyle="dotted", label="Females 0-9")
-seaborn.lineplot(x="year", y='m_13_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 13-17")
-seaborn.lineplot(x="year", y='m_10_12', data=df4, color="#e31a1c", linestyle="solid", label="Males 10-12")
+seaborn.lineplot(x="year", y='m_12_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 12-17")
+seaborn.lineplot(x="year", y='m_10_11', data=df4, color="#e31a1c", linestyle="solid", label="Males 10-11")
 seaborn.lineplot(x="year", y='m_0_9', data=df4, color="#e31a1c", linestyle="dotted", label="Males 0-9")
-plt.yticks(ticks=[50, 100, 150, 200])
-plt.ylim([0, 200])
+plt.yticks(ticks=[50, 100, 150, 200, 250])
+plt.ylim([0, 250])
 
 plt.xticks(ticks=ticks, labels=labels)
 plt.rc('font', size=12)  
