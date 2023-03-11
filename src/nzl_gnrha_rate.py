@@ -29,7 +29,7 @@ drugs[['year', 'drug']] = drugs[['Financial_year', 'Chemical_group']].fillna(met
 drugs.set_index(['drug', 'year', 'gender'], inplace=True)
 drugs.drop(labels=['Financial_year', 'Chemical_group'], axis=1, inplace=True)
 
-mapper = { f"{y}/{y-1999:02}": f"{y}-07-01" for y in range(2006, 2021) }
+mapper = { f"{y}/{y-1999:02}": f"{y}-01-01" for y in range(2006, 2021) }
 drugs.rename(index=mapper, inplace=True)
 gnrha = drugs.query("drug == 'GnRH_analogues'")
 gnrha = gnrha.sort_index(ascending=True) 
@@ -66,7 +66,7 @@ sex_age = [pop.iloc[0].tolist(), map(to_int, pop.iloc[1].tolist())]
 cols = list(zip(*sex_age))
 index_cols = pd.MultiIndex.from_tuples(cols, names=['sex', 'age'])
 
-pop.index = pop.index.map(lambda x: f"{x}-07-01")
+pop.index = pop.index.map(lambda x: f"{x}-01-01")
 pop.columns = index_cols
 pop = pop.iloc[2:]
 pop.sort_index(axis=1, inplace=True, ascending=True) 
@@ -93,11 +93,11 @@ df["pop_0_17"] = pop_0_17.sum(axis=1)
 df["m_rate_per_100k"] = (df["Male"] / df["pop_m_0_17"]) * 100000
 df["f_rate_per_100k"] = (df["Female"] / df["pop_f_0_17"]) * 100000
 df["rate_per_100k"] = (df["total_gnrha"] / df["pop_0_17"]) * 100000
-df["mean_rate_2006_2009"] = df.loc["2006-07-01":"2009-07-01", "rate_per_100k"].mean() 
+df["mean_rate_2006_2009"] = df.loc["2006-01-01":"2009-01-01", "rate_per_100k"].mean() 
 df['cpp_other_n'] = pd.to_numeric(round((df['mean_rate_2006_2009'] / 100000) * df['pop_0_17']), downcast="integer")
 df['total_excess'] = (df['total_gnrha'] - df['cpp_other_n'])
 df['total_gnrha_gd'] = df["total_excess"]
-df.loc["2006-07-01":"2009-07-01", "total_gnrha_gd"] = 0
+df.loc["2006-01-01":"2009-01-01", "total_gnrha_gd"] = 0
 
 def incidence_from_prevalence(series, window):
     incidences = []
@@ -120,9 +120,9 @@ df['cumsum_3'] = df['3yr_duration_incidence'].cumsum()
 df['cumsum_4'] = df['4yr_duration_incidence'].cumsum()
 df['cumsum_5'] = df['5yr_duration_incidence'].cumsum()
 df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
-df['pop_period_start_2008'] = df.loc["2008-07-01", "pop_9_17"]
-df['pop_period_start_2009'] = df.loc["2009-07-01", "pop_9_17"]
-df['pop_period_start_2017'] = df.loc["2017-07-01", "pop_9_17"]
+df['pop_period_start_2008'] = df.loc["2008-01-01", "pop_9_17"]
+df['pop_period_start_2009'] = df.loc["2009-01-01", "pop_9_17"]
+df['pop_period_start_2017'] = df.loc["2017-01-01", "pop_9_17"]
 
 
 
@@ -135,7 +135,7 @@ df['cum_4yr_inc_per_9_17_100k_2008'] = (df['cumsum_4'] / df['pop_period_start_20
 df['cum_4yr_inc_per_9_17_100k_2009'] = (df['cumsum_4'] / df['pop_period_start_2009']) * 100000
 
 
-df['cumsum_3_2017_2021'] = df.loc['2016-07-01':'2020-07-01', '3yr_duration_incidence'].cumsum()
+df['cumsum_3_2017_2021'] = df.loc['2016-01-01':'2020-01-01', '3yr_duration_incidence'].cumsum()
 
 df['cum_3yr_inc_per_9_17_100k_2017'] = (df['cumsum_3_2017_2021'] / df['pop_period_start_2017']) * 100000
 
@@ -151,14 +151,19 @@ df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 
 seaborn.set_theme()
 
-y_years = pd.to_datetime([f"{y}-01-01" for y in range(2007, 2022)])
+y_years = pd.to_datetime([f"{y}-01-01" for y in range(2006, 2021)])
 
 df1 = pd.DataFrame({
-                        'total_gnrha': df['total_gnrha'].tolist()
+    'total_gnrha': df['total_gnrha'].tolist(),
+    'f_0_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:17].sum(axis=1).tolist(),
+    'm_0_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:17].sum(axis=1).tolist(),
                     },
                     index=y_years)
 
 df1.index.name = 'year'
+
+ticks = [f"{x}-01-1" for x in range(2006, 2022, 2)]
+labels = [f"{x}/{x-1999:02}" for x in range(2006, 2022, 2)]
 
 # print(df1)
 
@@ -178,14 +183,11 @@ df3 = pd.DataFrame({
 
 df4 = pd.DataFrame({
     'f_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:9].sum(axis=1).tolist(),
-    'f_10_15': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 10:15].sum(axis=1).tolist(),
-    'f_16_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 16:17].sum(axis=1).tolist(),
-    'f_0_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 0:17].sum(axis=1).tolist(),
+    'f_10_12': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 10:12].sum(axis=1).tolist(),
+    'f_13_17': gnrha.loc[("GnRH_analogues", slice(None), "Female"), 13:17].sum(axis=1).tolist(),
     'm_0_9': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:9].sum(axis=1).tolist(),
-    'm_10_15': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 10:15].sum(axis=1).tolist(),
-    'm_16_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 16:17].sum(axis=1).tolist(),
-    'm_0_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 0:17].sum(axis=1).tolist(),
-
+    'm_10_12': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 10:12].sum(axis=1).tolist(),
+    'm_13_17': gnrha.loc[("GnRH_analogues", slice(None), "Male"), 13:17].sum(axis=1).tolist(),
 
     }, index=y_years)
 
@@ -196,17 +198,32 @@ df4.to_csv(f"./results/nzl_gnrha_age_sex.csv")
 
 # seaborn.lineplot(x='year', y='total_gnrha', data=df1)
 # seaborn.lineplot(data=df2)
-seaborn.lineplot(x="year", y='f_0_17', data=df4, color="#1f78b4", linestyle="solid", label="Females 0-17")
-seaborn.lineplot(x="year", y='f_16_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 16-17")
-seaborn.lineplot(x="year", y='f_10_15', data=df4, color="#1f78b4", linestyle="dashdot", label="Females 10-15")
+# seaborn.lineplot(x="year", y='f_0_17', data=df4, color="#1f78b4", linestyle="solid", label="Females 0-17")
+
+# Fig 1
+# seaborn.lineplot(x="year", y='total_gnrha', data=df1, color="#9467bd", linestyle="solid", label="Total 0-17")
+# seaborn.lineplot(x="year", y='f_0_17', data=df1, color="#1f78b4", linestyle="dashed", label="Females 0-17")
+# seaborn.lineplot(x="year", y='m_0_17', data=df1, color="#e31a1c", linestyle="dotted", label="Males 0-17")
+
+# plt.ylim([0, 700])
+# plt.yticks(ticks=[100, 200, 300, 400, 500, 600, 700])
+
+
+# Fig 2
+seaborn.lineplot(x="year", y='f_13_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 13-17")
+seaborn.lineplot(x="year", y='f_10_12', data=df4, color="#1f78b4", linestyle="solid", label="Females 10-12")
 seaborn.lineplot(x="year", y='f_0_9', data=df4, color="#1f78b4", linestyle="dotted", label="Females 0-9")
-seaborn.lineplot(x="year", y='m_0_17', data=df4, color="#e31a1c", linestyle="solid", label="Males 0-17")
-seaborn.lineplot(x="year", y='m_16_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 16-17")
-seaborn.lineplot(x="year", y='m_10_15', data=df4, color="#e31a1c", linestyle="dashdot", label="Males 10-15")
+seaborn.lineplot(x="year", y='m_13_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 13-17")
+seaborn.lineplot(x="year", y='m_10_12', data=df4, color="#e31a1c", linestyle="solid", label="Males 10-12")
 seaborn.lineplot(x="year", y='m_0_9', data=df4, color="#e31a1c", linestyle="dotted", label="Males 0-9")
+plt.yticks(ticks=[50, 100, 150, 200])
+plt.ylim([0, 200])
+
+plt.xticks(ticks=ticks, labels=labels)
+plt.rc('font', size=12)  
 plt.xlabel(None)
 plt.ylabel(None)
-plt.ylim([0, 450])
+plt.xlim(["2006-01-01", "2020-01-01"])
 plt.legend(loc='upper left')
 
 

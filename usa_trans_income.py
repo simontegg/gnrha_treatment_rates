@@ -1,4 +1,5 @@
 from datetime import date
+from matplotlib.pyplot import axis
 
 import pandas as pd
 import dataframe_image as dfi
@@ -16,20 +17,7 @@ name = f"{country}_{statistic}_{year}"
 usa = pd.read_csv(f"./data/{source}")
 
 age_groups = [
-        (18, 24),
-        (25, 29),
-        (30, 34),
-        (35, 39),
-        (40, 44),
-        (45, 49),
-        (50, 54),
-        (55, 59),
-        (60, 64),
-        (65, 88), #1934 is the earliest birth year in HPS
-        ]
-
-age_groups = [
-
+        (18, 24)
         ]
 
 income = {
@@ -45,10 +33,19 @@ income = {
         -88: False
         }
 
-
 def n(df):
     return df.shape[0]
 
+def get_mean_income(df):
+    count = 0
+    total = 0
+    for i in range(1, 8):
+        income_bracket = n(df.query(f"INCOME == {i}")) 
+        count += income_bracket
+        print(f"number in income bracket {i}: {income_bracket}")
+        total += income_bracket * income[i]
+
+    return total / count
 
 index = []
 stats = []
@@ -64,32 +61,39 @@ for age_group in age_groups:
     
     males =     by_age.query("EGENID_BIRTH == 1")
     m_total =   n(males)
-    m_f =       males.query("GENID_DESCRIBE == 2")
+    m_f =       males.query("GENID_DESCRIBE == 2 or GENID_DESCRIBE == 3")
     m_trans =   males.query('GENID_DESCRIBE == 3')
     m_none =    males.query('GENID_DESCRIBE == 4')
 
-    m_f_inc_3 = m_f.query('INCOME == 6')
-
-    prop_all = n(males.query('INCOME == 6')) / m_total
-    if n(m_f) > 0:
-        prop = n(m_f_inc_3) / n(m_f)
-
-        print('----')
-        print(n(m_f))
-        print(prop)
-        print(prop_all)
-    else:
-        print('----')
-        print(n(m_f))
-        print('****')
-        print(prop_all)
-
-
     females =   by_age.query("EGENID_BIRTH == 2")
     f_total =   n(females)
-    f_m =       females.query("GENID_DESCRIBE == 1")
+    f_m =       females.query("GENID_DESCRIBE == 1 or GENID_DESCRIBE == 3")
     f_trans =   females.query("GENID_DESCRIBE == 3")
     f_none =    females.query("GENID_DESCRIBE == 4")
+
+    m_f_inc = get_mean_income(m_f)
+    m_inc = get_mean_income(males)
+
+    f_m_inc = get_mean_income(f_m)
+    f_inc = get_mean_income(females)
+
+    m_m = males.query("GENID_DESCRIBE == 1")
+    male_ls_tim_pls_tif = pd.concat([m_m, f_m], axis=0)
+    gender_male_inc = get_mean_income(male_ls_tim_pls_tif)
+
+    f_f = females.query("GENID_DESCRIBE == 2")
+    gender_female = pd.concat([f_f, m_f], axis=0)
+    gender_female_inc = get_mean_income(gender_female)
+
+    
+    print(f"tim income: {m_f_inc}")
+    print(f"overall male income: {m_inc}")
+    print(f"gender male income: {gender_male_inc}")
+
+    print(f"tif income: {f_m_inc}")
+    print(f"female income: {f_inc}")
+    print(f"gender female income: {gender_female_inc}")
+
 
     row = {
             "m_f": n(m_f) / m_total,
