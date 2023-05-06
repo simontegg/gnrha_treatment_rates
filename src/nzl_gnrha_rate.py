@@ -120,9 +120,11 @@ df['cumsum_3'] = df['3yr_duration_incidence'].cumsum()
 df['cumsum_4'] = df['4yr_duration_incidence'].cumsum()
 df['cumsum_5'] = df['5yr_duration_incidence'].cumsum()
 df['pop_9_17'] = pop_0_17.loc[:, 9:17].sum(axis=1)
+df['pop_6_17'] = pop_0_17.loc[:, 6:17].sum(axis=1)
 df['pop_period_start_2008'] = df.loc["2008-01-01", "pop_9_17"]
 df['pop_period_start_2009'] = df.loc["2009-01-01", "pop_9_17"]
 df['pop_period_start_2017'] = df.loc["2017-01-01", "pop_9_17"]
+df['pop_period_start_6_17_2017'] = df.loc["2017-01-01", "pop_6_17"]
 
 
 
@@ -138,6 +140,7 @@ df['cum_4yr_inc_per_9_17_100k_2009'] = (df['cumsum_4'] / df['pop_period_start_20
 df['cumsum_3_2017_2021'] = df.loc['2016-01-01':'2020-01-01', '3yr_duration_incidence'].cumsum()
 
 df['cum_3yr_inc_per_9_17_100k_2017'] = (df['cumsum_3_2017_2021'] / df['pop_period_start_2017']) * 100000
+df['cum_3yr_inc_per_6_17_100k_2017'] = (df['cumsum_3_2017_2021'] / df['pop_period_start_6_17_2017']) * 100000
 
 
 
