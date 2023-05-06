@@ -13,3 +13,6 @@
 [pulse2022_puf_50.csv](https://www.census.gov/programs-surveys/household-pulse-survey/datasets.html)
 
 [DPE403903_20220806_031634_89.csv](https://infoshare.stats.govt.nz/)
+
+
+[reuters.csv](https://www.reuters.com/investigates/special-report/usa-transyouth-data/)
