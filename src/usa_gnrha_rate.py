@@ -22,7 +22,7 @@ df = pd.DataFrame({
     'pop_2017_6_17': pop_2017_6_17,
     'pop_2017_9_17': pop_2017_9_17,
     'gnrha_rate_9_17_100k': (cumulative_incidence_2017_2021 / pop_2017_9_17) * 100000,
-    'gnrha_rate_6-17_100k': (cumulative_incidence_2017_2021 / pop_2017_6_17) * 100000
+    'gnrha_rate_6_17_100k': (cumulative_incidence_2017_2021 / pop_2017_6_17) * 100000
     }, index=["total"])
 
 df.to_csv(f"./results/{name}.csv", float_format="%.2f")
