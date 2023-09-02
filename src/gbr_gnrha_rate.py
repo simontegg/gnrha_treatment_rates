@@ -94,26 +94,26 @@ dfi.export(styled, f"results/{name}_table.png")
 
 # print(df)
 
-males_9_17 = eng_wls.loc[
+males_12_17 = eng_wls.loc[
         (2008, "England and Wales"):(2020, "England and Wales"), 
-        ("M", 9):("M", 17)
+        ("M", 12):("M", 17)
         ]
 
-females_9_17 = eng_wls.loc[
+females_12_17 = eng_wls.loc[
         (2008, "England and Wales"):(2020, "England and Wales"), 
-        ("F", 9):("F", 14)
+        ("F", 12):("F", 14)
         ]
 
 
 
-pop_m_2008 = males_9_17.loc[(2008, "England and Wales"), :].sum()
-pop_f_2008 = females_9_17.loc[(2008, "England and Wales"), :].sum()
+pop_m_2008 = males_12_17.loc[(2008, "England and Wales"), :].sum()
+pop_f_2008 = females_12_17.loc[(2008, "England and Wales"), :].sum()
 pop_total_2008 = pop_m_2008 + pop_f_2008
 
 cum_df = pd.DataFrame({
-    'pop_2008_9_17': [pop_total_2008, pop_f_2008, pop_m_2008],
+    'pop_2008_12_17': [pop_total_2008, pop_f_2008, pop_m_2008],
     'gnrha_gd_2008_2021': [858, None, None],
-    'cum_rate_per_9_17_100k': [(858 / pop_total_2008) * 100000, None, None]
+    'cum_rate_per_12_17_100k': [(858 / pop_total_2008) * 100000, None, None]
     },
     index=["total", "female", "male"])
 

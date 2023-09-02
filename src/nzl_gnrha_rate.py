@@ -185,6 +185,8 @@ df2 = pd.DataFrame({
         'total_gnrha_gd':  df['total_gnrha_gd'].tolist()
     }, index=y_years)
 
+df2.index.name = "year"
+
 
 df3 = pd.DataFrame({
     '3yr_duration_incidence': df['3yr_duration_incidence'].tolist(),
@@ -203,13 +205,17 @@ df4 = pd.DataFrame({
 
     }, index=y_years)
 
-print(df4)
+df4.index.name = "year"
 
-df4.to_csv(f"./results/nzl_gnrha_age_sex_alt.csv")
+# print(df4)
+
+# df4.to_csv(f"./results/nzl_gnrha_age_sex_alt.csv")
+
+# print(df4)
 
 
 # seaborn.lineplot(x='year', y='total_gnrha', data=df1)
-# seaborn.lineplot(data=df2)
+seaborn.lineplot(data=df2)
 # seaborn.lineplot(x="year", y='f_12_17', data=df4, color="#1f78b4", linestyle="solid", label="Females 12-17")
 
 # # Fig 1
@@ -217,19 +223,19 @@ df4.to_csv(f"./results/nzl_gnrha_age_sex_alt.csv")
 # seaborn.lineplot(x="year", y='f_12_17', data=df1, color="#1f78b4", linestyle="dashed", label="Females 12-17")
 # seaborn.lineplot(x="year", y='m_12_17', data=df1, color="#e31a1c", linestyle="dotted", label="Males 12-17")
 
-# plt.ylim([0, 700])
-# plt.yticks(ticks=[100, 200, 300, 400, 500, 600, 700])
+plt.ylim([0, 500])
+plt.yticks(ticks=[100, 200, 300, 400, 500])
 
 
 # # Fig 2
-seaborn.lineplot(x="year", y='f_12_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 12-17")
+# seaborn.lineplot(x="year", y='f_12_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 12-17")
 # seaborn.lineplot(x="year", y='f_10_11', data=df4, color="#1f78b4", linestyle="solid", label="Females 10-11")
 # seaborn.lineplot(x="year", y='f_0_9', data=df4, color="#1f78b4", linestyle="dotted", label="Females 0-9")
-seaborn.lineplot(x="year", y='m_12_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 12-17")
+# seaborn.lineplot(x="year", y='m_12_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 12-17")
 # seaborn.lineplot(x="year", y='m_10_11', data=df4, color="#e31a1c", linestyle="solid", label="Males 10-11")
 # seaborn.lineplot(x="year", y='m_0_9', data=df4, color="#e31a1c", linestyle="dotted", label="Males 0-9")
-plt.yticks(ticks=[50, 100, 150, 200, 250])
-plt.ylim([0, 250])
+# plt.yticks(ticks=[50, 100, 150, 200, 250])
+# plt.ylim([0, 250])
 
 plt.xticks(ticks=ticks, labels=labels)
 plt.rc('font', size=12)  
