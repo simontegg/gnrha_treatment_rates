@@ -15,9 +15,9 @@ female = "4000   "
 pop = 'TotalPopulation_1'
 numeric_cols = ["transwomen", "transmen", "total"]
 ages = [
-        10900, #9 years
-        11000, #10 years
-        11100, #11 years
+        # 10900, #9 years
+        # 11000, #10 years
+        # 11100, #11 years
         11200, #12 years
         11300, #13 years
         11400, #14 years
