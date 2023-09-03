@@ -92,7 +92,7 @@ df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 styled = df.style.format(formatter=formatter)
 dfi.export(styled, f"results/{name}_table.png")
 
-# print(df)
+print(eng_wls)
 
 males_12_17 = eng_wls.loc[
         (2008, "England and Wales"):(2020, "England and Wales"), 
@@ -101,7 +101,7 @@ males_12_17 = eng_wls.loc[
 
 females_12_17 = eng_wls.loc[
         (2008, "England and Wales"):(2020, "England and Wales"), 
-        ("F", 12):("F", 14)
+        ("F", 12):("F", 17)
         ]
 
 
