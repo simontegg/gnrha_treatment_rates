@@ -98,7 +98,7 @@ for r in year_ranges:
     row["total"] = total_sum
     row["female"] = f_sum
     row["male"] = m_sum
-    row_name = f"9_17_pop_{r[0]}_{r[1]}" if len(years) > 1 else f"9_17_pop_{r[0]}"
+    row_name = f"12_17_pop_{r[0]}_{r[1]}" if len(years) > 1 else f"12_17_pop_{r[0]}"
     index.append(row_name)
     stats.append(row)
     formatter[row_name] = "{:,.0f}"
@@ -134,9 +134,13 @@ for r in year_ranges:
     formatter[rate_name] = "{:.2f}"
 
 
+
 df = pd.DataFrame(stats, index=index)
 df = df.transpose()
 df.to_csv(f"./results/{name}.csv", float_format="%.2f")
+
+
+print(df)
 
 styled = df.style.format(formatter=formatter)
 dfi.export(styled, f"results/{name}.png")
