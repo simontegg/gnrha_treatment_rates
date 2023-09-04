@@ -112,8 +112,8 @@ pop_total_2008 = pop_m_2008 + pop_f_2008
 
 cum_df = pd.DataFrame({
     'pop_2008_12_17': [pop_total_2008, pop_f_2008, pop_m_2008],
-    'gnrha_gd_2008_2021': [858, None, None],
-    'cum_rate_per_12_17_100k': [(858 / pop_total_2008) * 100000, None, None]
+    'gnrha_gd_2008_2021': [851, None, None],
+    'cum_rate_per_12_17_100k': [(851 / pop_total_2008) * 100000, None, None]
     },
     index=["total", "female", "male"])
 

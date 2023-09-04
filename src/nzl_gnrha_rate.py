@@ -110,8 +110,7 @@ df["f_rate_per_100k"] = (df["Female"] / df["pop_f_12_17"]) * 100000
 df["rate_per_100k"] = (df["total_gnrha"] / df["pop_12_17"]) * 100000
 df["mean_rate_2006_2009"] = df.loc["2006-01-01":"2009-01-01", "rate_per_100k"].mean() 
 df['other_n'] = pd.to_numeric(round((df['mean_rate_2006_2009'] / 100000) * df['pop_12_17']), downcast="integer")
-df['total_excess'] = (df['total_gnrha'] - df['other_n'])
-df['total_gnrha_gd'] = df["total_excess"]
+df['total_gnrha_gd'] = df["total_gnrha"]
 df.loc["2006-01-01":"2009-01-01", "total_gnrha_gd"] = 0
 
 def incidence_from_prevalence(series, window):
