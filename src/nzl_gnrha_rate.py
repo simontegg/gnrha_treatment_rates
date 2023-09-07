@@ -68,6 +68,19 @@ males = males.drop(labels=[31, 33])
 females = females.drop(labels=[30, 32])
 males = males.reset_index(drop=True)
 females = females.reset_index(drop=True)
+# males = males.reindex(labels=mapper)
+# females.rename(index=mapper, inplace=True)
+
+males.index = [f"{y}-01-01" for y in range(2006, 2021)]
+females.index = [f"{y}-01-01" for y in range(2006, 2021)]
+
+print(males["Patients"] + females["Patients"])
+
+
+
+
+
+
 
 
 
@@ -125,10 +138,14 @@ pop_12_17 = pop_0_17.loc[:, 12:17]
 df = gnrha.sum(axis=1).to_frame().unstack().fillna(value=0).reset_index(level=0, drop=True)
 df.columns = df.columns.droplevel()
 
+print(df.index)
+
 
 df["total_gnrha"] = pd.to_numeric(df.sum(axis=1), downcast="integer")
 
 df["updated"] = females["Patients"] + males["Patients"]
+
+# print(df["updated"])
 
 df["pop_f_12_17"] = pd.to_numeric(female_pop_12_17.sum(axis=1), downcast="integer")
 df["pop_m_12_17"] = pd.to_numeric(male_pop_12_17.sum(axis=1), downcast="integer")
