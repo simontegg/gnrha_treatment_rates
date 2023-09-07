@@ -53,6 +53,33 @@ gnrha.update(gd)
 gnrha = gnrha.replace("< 10", 5)
 
 
+gnrha_source_12_17 = 'GnRh_12_17.xlsx'
+latest = pd.read_excel(
+        f"./data/{gnrha_source_12_17}", 
+        skiprows=5, 
+        header=0,
+    ) 
+
+
+males = latest.query("gender == 'Male'")
+females = latest.query("gender == 'Female'")
+males = males.replace("<6", 3)
+males = males.drop(labels=[31, 33])
+females = females.drop(labels=[30, 32])
+males = males.reset_index(drop=True)
+females = females.reset_index(drop=True)
+
+
+
+
+
+
+
+
+
+
+
+
 
 pop = pd.read_csv(
         f"./data/{pop_source}",
@@ -101,16 +128,17 @@ df.columns = df.columns.droplevel()
 
 df["total_gnrha"] = pd.to_numeric(df.sum(axis=1), downcast="integer")
 
+df["updated"] = females["Patients"] + males["Patients"]
 
 df["pop_f_12_17"] = pd.to_numeric(female_pop_12_17.sum(axis=1), downcast="integer")
 df["pop_m_12_17"] = pd.to_numeric(male_pop_12_17.sum(axis=1), downcast="integer")
 df["pop_12_17"] = pop_12_17.sum(axis=1)
-df["m_rate_per_100k"] = (df["Male"] / df["pop_m_12_17"]) * 100000
-df["f_rate_per_100k"] = (df["Female"] / df["pop_f_12_17"]) * 100000
-df["rate_per_100k"] = (df["total_gnrha"] / df["pop_12_17"]) * 100000
+# df["m_rate_per_100k"] = (df["Male"] / df["pop_m_12_17"]) * 100000
+# df["f_rate_per_100k"] = (df["Female"] / df["pop_f_12_17"]) * 100000
+df["rate_per_100k"] = (df["updated"] / df["pop_12_17"]) * 100000
 df["mean_rate_2006_2009"] = df.loc["2006-01-01":"2009-01-01", "rate_per_100k"].mean() 
 df['other_n'] = pd.to_numeric(round((df['mean_rate_2006_2009'] / 100000) * df['pop_12_17']), downcast="integer")
-df['total_gnrha_gd'] = df["total_gnrha"]
+df['total_gnrha_gd'] = df["updated"]
 df.loc["2006-01-01":"2009-01-01", "total_gnrha_gd"] = 0
 
 def incidence_from_prevalence(series, window):
@@ -251,7 +279,7 @@ plt.legend(loc='upper left')
 # dfi.export(df1, 'df_styled.png')
 
 
-plt.show()
+# plt.show()
 
 
 

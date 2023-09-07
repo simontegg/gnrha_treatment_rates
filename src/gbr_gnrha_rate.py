@@ -110,6 +110,12 @@ pop_m_2008 = males_12_17.loc[(2008, "England and Wales"), :].sum()
 pop_f_2008 = females_12_17.loc[(2008, "England and Wales"), :].sum()
 pop_total_2008 = pop_m_2008 + pop_f_2008
 
+pop_m_2020 = males_12_17.loc[(2020, "England and Wales"), :].sum()
+pop_f_2020 = females_12_17.loc[(2020, "England and Wales"), :].sum()
+pop_total_2020 = pop_m_2020 + pop_f_2020
+
+print((378 / pop_total_2020) * 100000)
+
 cum_df = pd.DataFrame({
     'pop_2008_12_17': [pop_total_2008, pop_f_2008, pop_m_2008],
     'gnrha_gd_2008_2021': [851, None, None],
@@ -120,7 +126,7 @@ cum_df = pd.DataFrame({
 cum_df.to_csv(f"./results/{name}_cumulative.csv", float_format="%.2f")
 
 
-print(cum_df)
+# print(cum_df)
 
 
 
