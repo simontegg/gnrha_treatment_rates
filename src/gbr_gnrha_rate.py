@@ -17,17 +17,17 @@ pop = pd.read_excel(f"./data/{pop_source}", skiprows=1, sheet_name="Single year 
 
 pop.index.names = ["year", "borough"]
 pop.columns.names = ["sex", "age"]
-eng_wls = pop.query("borough == 'England and Wales'")
+eng_wls = pop.query("borough == 'England'")
 eng_wls.sort_index(axis=1, inplace=True, ascending=True) 
 eng_wls.sort_index(inplace=True, ascending=True) 
 
 # select ages 9-14 between 2014-2018
 males = eng_wls.loc[
-        (2014, "England and Wales"):(2018, "England and Wales"), 
+        (2014, "England"):(2018, "England"), 
         ("M", 9):("M", 14)
         ]
 females = eng_wls.loc[
-        (2014, "England and Wales"):(2018, "England and Wales"), 
+        (2014, "England"):(2018, "England"), 
         ("F", 9):("F", 14)
         ]
 
@@ -95,23 +95,23 @@ dfi.export(styled, f"results/{name}_table.png")
 print(eng_wls)
 
 males_12_17 = eng_wls.loc[
-        (2008, "England and Wales"):(2020, "England and Wales"), 
+        (2008, "England"):(2020, "England"), 
         ("M", 12):("M", 17)
         ]
 
 females_12_17 = eng_wls.loc[
-        (2008, "England and Wales"):(2020, "England and Wales"), 
+        (2008, "England"):(2020, "England"), 
         ("F", 12):("F", 17)
         ]
 
 
 
-pop_m_2008 = males_12_17.loc[(2008, "England and Wales"), :].sum()
-pop_f_2008 = females_12_17.loc[(2008, "England and Wales"), :].sum()
+pop_m_2008 = males_12_17.loc[(2008, "England"), :].sum()
+pop_f_2008 = females_12_17.loc[(2008, "England"), :].sum()
 pop_total_2008 = pop_m_2008 + pop_f_2008
 
-pop_m_2020 = males_12_17.loc[(2020, "England and Wales"), :].sum()
-pop_f_2020 = females_12_17.loc[(2020, "England and Wales"), :].sum()
+pop_m_2020 = males_12_17.loc[(2020, "England"), :].sum()
+pop_f_2020 = females_12_17.loc[(2020, "England"), :].sum()
 pop_total_2020 = pop_m_2020 + pop_f_2020
 
 print((378 / pop_total_2020) * 100000)
