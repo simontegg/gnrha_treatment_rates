@@ -16,3 +16,5 @@
 
 
 [reuters.csv](https://www.reuters.com/investigates/special-report/usa-transyouth-data/)
+
+[px-x-0102030000_101.px](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.assetdetail.26605155.html)

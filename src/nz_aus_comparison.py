@@ -123,23 +123,24 @@ df1 = pd.DataFrame({
                     index=y_years)
 
 
+seaborn.set_theme()
 
-ticks = [f"{x}-01-1" for x in range(2006, 2024, 2)]
-labels = [f"{x}" for x in range(2006, 2024, 2)]
+ticks = [f"{x}-01-1" for x in range(2012, 2024, 2)]
+labels = [f"{x}" for x in range(2012, 2024, 2)]
 
 
 # # Fig 1
-seaborn.lineplot(x="year", y='nz_12_17', data=df1, color="#1f77b4", linestyle="solid", label="NZ adolescents 12-17")
-seaborn.lineplot(x="year", y='sa', data=df1, color="#ff7f0e", linestyle="--", label="South Australia")
+# seaborn.lineplot(x="year", y='nz_12_17', data=df1, color="#1f77b4", linestyle="solid", label="NZ adolescents 12-17")
+seaborn.lineplot(x="year", y='ql', data=df1, color="#e377c2", linestyle="solid", label="Queensland")
 seaborn.lineplot(x="year", y='wa', data=df1, color="#2ca02c", linestyle="-.", label="Western Australia")
+seaborn.lineplot(x="year", y='sa', data=df1, color="#ff7f0e", linestyle="--", label="South Australia")
 seaborn.lineplot(x="year", y='vc', data=df1, color="#d62728", linestyle=":", label="Victoria")
-seaborn.lineplot(x="year", y='ql', data=df1, color="#9467bd", linestyle="solid", label="Queensland")
 
 plt.xticks(ticks=ticks, labels=labels)
 plt.rc('font', size=12)  
 plt.ylabel("Treatment prevalence per 100k")
 plt.xlabel(None)
-plt.xlim(["2006-01-01", "2023-01-01"])
+plt.xlim(["2012-01-01", "2023-01-01"])
 plt.legend(loc='upper left')
 
 plt.show()

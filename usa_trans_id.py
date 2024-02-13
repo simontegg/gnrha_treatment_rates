@@ -8,12 +8,14 @@ import dataframe_image as dfi
 # source_start = '2022-10-05'
 # source_end = '2022-10-17'
 country = 'usa'
-source = 'pulse2022_puf_50.csv'
-year = 2022
+# source = 'pulse2022_puf_50.csv'
+source = 'pulse2023_puf_63.csv'
+year = 2023
 statistic = "trans_id"
 name = f"{country}_{statistic}_{year}"
 
 usa = pd.read_csv(f"./data/{source}")
+
 
 age_groups = [
         (18, 24),
@@ -26,10 +28,6 @@ age_groups = [
         (55, 59),
         (60, 64),
         (65, 88), #1934 is the earliest birth year in HPS
-        ]
-
-age_groups = [
-
         ]
 
 income = {
@@ -61,6 +59,7 @@ for age_group in age_groups:
 
     by_age =    usa.query(age_query)
     total =     n(by_age)
+
     
     males =     by_age.query("EGENID_BIRTH == 1")
     m_total =   n(males)
@@ -113,8 +112,8 @@ for age_group in age_groups:
 
 
 
-# df = pd.DataFrame(stats, index=index)
-# df.to_csv(f"./results/{name}.csv", float_format="%.4f")
+df = pd.DataFrame(stats, index=index)
+df.to_csv(f"./results/{name}.csv", float_format="%.4f")
 
 # Table png
 # percent = lambda x: "{:.2f}%".format(x*100)
