@@ -147,7 +147,7 @@ def incidence_from_prevalence(series, window):
     return incidences
 
 df = pd.DataFrame({
-    'years': y_years,
+    'year': y_years,
     'males_0_17': males_0_17["Patients"],
     'unknown_0_17': summed_other["Patients"],
     'females_0_17': females_0_17["Patients"],
@@ -159,6 +159,7 @@ df = pd.DataFrame({
 
 df["males_0_11"] = df["males_0_17"] - df["males_12_17"]
 df["females_0_11"] = df["females_0_17"] - df["females_12_17"]
+df['total_0_11'] = df["males_0_11"] + df["females_0_11"]
 df["gnrha_prevalence_GD_12_17"] = df["gnrha_prevalence_12_17"]
 cutoff_date = pd.Timestamp('2010-01-01')
 df.loc[df.index < cutoff_date, 'gnrha_prevalence_GD_12_17'] = 0
@@ -196,36 +197,14 @@ print(df)
 
 
 
-
-
-
-
-
 # ## Figures and Tables
-# seaborn.set_theme()
+seaborn.set_theme()
 
 # y_years = pd.to_datetime([f"{y}-01-01" for y in range(2006, 2023)])
 
 # # https://www.engage.england.nhs.uk/consultation/puberty-suppressing-hormones/user_uploads/engagement-report-interim-policy-on-puberty-suppressing-hormones-for-gender-incongruence-or-dysphoria.pdf
 # eng_wls = ([np.nan] * (2022 - 2006)) + [378] 
 # hue = (["first"] * (2023 - 2006))
-
-
-
-
-
-# df = pd.DataFrame({
-#     'year': pd.Series(data=y_years, index=y_years),
-#     # 'nz_12_17': f.loc[:, "Patients"] + m.loc[:, "Patients"],
-#     'eng_wls_12_17': pd.Series(data=eng_wls, index=y_years),
-#     "hue": pd.Series(data=hue, index=y_years),
-
-#     # 'm_12_17': m.loc[:, "Patients"],
-#                     },
-#                     index=y_years)
-
-# df.index.name = 'years'
-# df.rename_axis("group", axis = "columns", inplace=True)
 
 
 # ticks = [f"{x}-01-1" for x in range(2006, 2024, 2)]
@@ -238,23 +217,21 @@ print(df)
 #     'eng_wls_12_17_rate': pd.Series(data=eng_wls_rate, index=y_years),
 #     }, index=y_years)
 
+# 'gnrha_prevalence_12_17'
+    # 'gnrha_prevalence_0_17': total_0_17
 
 
 
-
-# colors = seaborn.color_palette("bright")
+colors = seaborn.color_palette("bright")
 # colors.reverse()
 
 
 # # # Fig 1
-# seaborn.lineplot(x="year", y='nz_12_17', data=df1, color="#d62728", linestyle="solid", label="NZ adolescents 12-17")
-# seaborn.lineplot(x="year", y='nz_9_11', data=df1, color="#ff7f0e", linestyle="dashed", label="NZ adolescents 9-11")
-# seaborn.scatterplot(x="year", y='eng_wls_12_17', data=df1, label="England & Wales adolescents 12-17")
-
-# # seaborn.lineplot(x="year", y='m_12_17', data=df1, color="#e31a1c", linestyle="dotted", label="Males 12-17")
-
-# # plt.ylim([0, 450])
-# # plt.yticks(ticks=[50, 100, 150, 200, 250, 300, 350, 400, 450])
+# seaborn.lineplot(x="year", y='gnrha_prevalence_0_17', data=df, color=colors[0], linestyle="solid", label="Minors 0-17")
+# seaborn.lineplot(x="year", y='gnrha_prevalence_12_17', data=df, color=colors[3], linestyle="solid", label="Adolescents 12-17")
+# seaborn.lineplot(x="year", y='total_0_11', data=df, color=colors[2], linestyle="solid", label="Children 0-11")
+# plt.ylim([0, 700])
+# plt.yticks(ticks=[100, 200, 300, 400, 500, 600, 700])
 
 
 # ## Rate
@@ -264,21 +241,23 @@ print(df)
 
 
 # # # Fig 2
-# # seaborn.lineplot(x="year", y='f_12_17', data=df4, color="#1f78b4", linestyle="dashed", label="Females 12-17")
-# # seaborn.lineplot(x="year", y='f_10_11', data=df4, color="#1f78b4", linestyle="solid", label="Females 10-11")
-# # seaborn.lineplot(x="year", y='f_0_9', data=df4, color="#1f78b4", linestyle="dotted", label="Females 0-9")
-# # seaborn.lineplot(x="year", y='m_12_17', data=df4, color="#e31a1c", linestyle="dashed", label="Males 12-17")
-# # seaborn.lineplot(x="year", y='m_10_11', data=df4, color="#e31a1c", linestyle="solid", label="Males 10-11")
-# # seaborn.lineplot(x="year", y='m_0_9', data=df4, color="#e31a1c", linestyle="dotted", label="Males 0-9")
-# # plt.yticks(ticks=[50, 100, 150, 200, 250])
-# # plt.ylim([0, 250])
+seaborn.lineplot(x="year", y='females_12_17', data=df, color="#1f78b4", linestyle="solid", label="Females 12-17")
+seaborn.lineplot(x="year", y='females_0_11', data=df, color="#1f78b4", linestyle="dashed", label="Females 0-11")
+seaborn.lineplot(x="year", y='males_12_17', data=df, color="#e31a1c", linestyle="solid", label="Males 12-17")
+seaborn.lineplot(x="year", y='males_0_11', data=df, color="#e31a1c", linestyle="dashed", label="Males 0-11")
+plt.yticks(ticks=[50, 100, 150, 200, 250])
+plt.ylim([0, 250])
 
-# plt.xticks(ticks=ticks, labels=labels)
-# plt.rc('font', size=12)  
-# plt.ylabel("Treatment prevalence")
-# plt.xlabel(None)
-# plt.xlim(["2006-01-01", "2023-01-01"])
-# plt.legend(loc='upper left')
+
+ticks = [f"{x}-01-1" for x in range(2006, 2024, 2)]
+labels = [f"{x}" for x in range(2006, 2024, 2)]
+
+plt.xticks(ticks=ticks, labels=labels)
+plt.rc('font', size=12)  
+plt.ylabel("Treatment prevalence")
+plt.xlabel(None)
+plt.xlim(["2006-01-01", "2023-01-01"])
+plt.legend(loc='upper left')
 
 
 
@@ -289,4 +268,4 @@ print(df)
 # # dfi.export(df1, 'df_styled.png')
 
 
-# plt.show()
+plt.show()
