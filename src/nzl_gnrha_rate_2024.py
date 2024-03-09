@@ -88,6 +88,7 @@ prev = pd.DataFrame({
         "females_12_17": dfs["prev_12_17_female"]["Patients"],
         "males_0_11": dfs["prev_0_17_male"]["Patients"] - dfs["prev_12_17_male"]["Patients"],
         "females_0_11": dfs["prev_0_17_female"]["Patients"] - dfs["prev_12_17_female"]["Patients"],
+        "total_0_17": dfs["prev_0_17_male"]["Patients"] + dfs["prev_0_17_female"]["Patients"]
     }, index=y_years)
 
 prev["total_12_17"] = prev["males_12_17"] + prev["females_12_17"]
@@ -143,18 +144,18 @@ print(inc)
 seaborn.set_theme()
 
 total_c = seaborn.color_palette("dark")[7]
-f_c = seaborn.color_palette()[3]
-m_c = seaborn.color_palette()[0]
+f_c = "#1f78b4"
+m_c = "#e31a1c"
 
 
 # # # Fig 1 Incidence
-# seaborn.lineplot(x="year", y='females_12_17', data=inc, color=f_c, linestyle="solid", label="F 12-17")
-# seaborn.lineplot(x="year", y='females_0_11', data=inc, color=f_c, linestyle="solid", label="F 0-11")
-# seaborn.lineplot(x="year", y='males_12_17', data=inc, color=m_c, linestyle="solid", label="M 12-17")
-# seaborn.lineplot(x="year", y='males_0_11', data=inc, color=m_c, linestyle="solid", label="M 0-11")
-# plt.ylim([0, 120])
-# plt.yticks(ticks=[20, 40, 60, 80, 100, 120])
-# plt.ylabel("Treatment incidence")
+seaborn.lineplot(x="year", y='females_12_17', data=inc, color=f_c, linestyle="solid", label="Females 12-17")
+seaborn.lineplot(x="year", y='females_0_11', data=inc, color=f_c, linestyle="dashed", label="Females 0-11")
+seaborn.lineplot(x="year", y='males_12_17', data=inc, color=m_c, linestyle="solid", label="Males 12-17")
+seaborn.lineplot(x="year", y='males_0_11', data=inc, color=m_c, linestyle="dashed", label="Males 0-11")
+plt.ylim([0, 120])
+plt.yticks(ticks=[20, 40, 60, 80, 100, 120])
+plt.ylabel("Treatment incidence")
 
 # Prevalence
 # seaborn.lineplot(x="year", y='total_12_17', data=prev, color=total_c, linestyle="solid", label="Total 12-17")
@@ -257,7 +258,7 @@ print(df)
 
 
 # # ## Figures and Tables
-# seaborn.set_theme()
+seaborn.set_theme()
 
 # # y_years = pd.to_datetime([f"{y}-01-01" for y in range(2006, 2023)])
 
@@ -281,16 +282,17 @@ print(df)
 
 
 
-# colors = seaborn.color_palette("bright")
-# # colors.reverse()
+colors = seaborn.color_palette("bright")
+# colors.reverse()
 
 
 # # # # Fig 1
-# # seaborn.lineplot(x="year", y='gnrha_prevalence_0_17', data=df, color=colors[0], linestyle="solid", label="Minors 0-17")
-# # seaborn.lineplot(x="year", y='gnrha_prevalence_12_17', data=df, color=colors[3], linestyle="solid", label="Adolescents 12-17")
-# # seaborn.lineplot(x="year", y='total_0_11', data=df, color=colors[2], linestyle="solid", label="Children 0-11")
-# # plt.ylim([0, 700])
-# # plt.yticks(ticks=[100, 200, 300, 400, 500, 600, 700])
+# seaborn.lineplot(x="year", y='total_0_17', data=prev, color=colors[0], linestyle="solid", label="Minors age 0-17")
+# seaborn.lineplot(x="year", y='total_12_17', data=prev, color=colors[3], linestyle="solid", label="Adolescents age 12-17")
+# seaborn.lineplot(x="year", y='total_0_11', data=prev, color=colors[2], linestyle="solid", label="Children age 0-11")
+# plt.ylim([0, 700])
+# plt.yticks(ticks=[100, 200, 300, 400, 500, 600, 700])
+# plt.ylabel("Treatment prevalence")
 
 
 # # ## Rate
@@ -300,23 +302,26 @@ print(df)
 
 
 # # # # Fig 2
-# seaborn.lineplot(x="year", y='females_12_17', data=df, color="#1f78b4", linestyle="solid", label="Females 12-17")
-# seaborn.lineplot(x="year", y='females_0_11', data=df, color="#1f78b4", linestyle="dashed", label="Females 0-11")
-# seaborn.lineplot(x="year", y='males_12_17', data=df, color="#e31a1c", linestyle="solid", label="Males 12-17")
-# seaborn.lineplot(x="year", y='males_0_11', data=df, color="#e31a1c", linestyle="dashed", label="Males 0-11")
+# seaborn.lineplot(x="year", y='females_12_17', data=prev, color="#1f78b4", linestyle="solid", label="Females 12-17")
+# seaborn.lineplot(x="year", y='females_0_11', data=prev, color="#1f78b4", linestyle="dashed", label="Females 0-11")
+# seaborn.lineplot(x="year", y='males_12_17', data=prev, color="#e31a1c", linestyle="solid", label="Males 12-17")
+# seaborn.lineplot(x="year", y='males_0_11', data=prev, color="#e31a1c", linestyle="dashed", label="Males 0-11")
 # plt.yticks(ticks=[50, 100, 150, 200, 250])
 # plt.ylim([0, 250])
-
-
-# ticks = [f"{x}-01-1" for x in range(2006, 2024, 2)]
-# labels = [f"{x}" for x in range(2006, 2024, 2)]
-
-# plt.xticks(ticks=ticks, labels=labels)
-# plt.rc('font', size=12)  
 # plt.ylabel("Treatment prevalence")
-# plt.xlabel(None)
-# plt.xlim(["2006-01-01", "2023-01-01"])
-# plt.legend(loc='upper left')
+
+
+## Fig 3 Incidence
+
+
+ticks = [f"{x}-01-1" for x in range(2006, 2026, 2)]
+labels = [f"{x}" for x in range(2006, 2026, 2)]
+
+plt.xticks(ticks=ticks, labels=labels)
+plt.rc('font', size=12)  
+plt.xlabel(None)
+plt.xlim(["2006-01-01", "2024-01-01"])
+plt.legend(loc='upper left')
 
 
 
