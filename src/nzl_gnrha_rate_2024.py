@@ -94,6 +94,8 @@ prev = pd.DataFrame({
 prev["total_12_17"] = prev["males_12_17"] + prev["females_12_17"]
 prev["total_0_11"] = prev["males_0_11"] + prev["females_0_11"]
 
+prev.to_csv(f"./results/prev_{name}.csv")
+
 carryover = pd.DataFrame({
         'year': y_years,
         "males": prev["males_12_17"] - inc["males_12_17"],
