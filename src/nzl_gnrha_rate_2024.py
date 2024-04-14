@@ -143,8 +143,11 @@ f_durations_0_11 = pd.DataFrame({
         "females_0_11_prev_5": inc["females_0_11"].rolling(window=5, min_periods=1).sum(),
     })
 
-
+print("incidence")
 print(inc)
+
+print("prevalence")
+print(prev)
 # m_durations_0_11.plot(kind="line", x="year")
 
 seaborn.set_theme()
