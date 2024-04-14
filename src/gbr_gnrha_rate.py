@@ -105,9 +105,9 @@ females_12_17 = eng_wls.loc[
 
 
 
-pop_m_2008 = males_12_17.loc[(2009, "England and Wales"), :].sum()
-pop_f_2008 = females_12_17.loc[(2009, "England and Wales"), :].sum()
-pop_total_2008 = pop_m_2008 + pop_f_2008
+pop_m_2009 = males_12_17.loc[(2009, "England and Wales"), :].sum()
+pop_f_2009 = females_12_17.loc[(2009, "England and Wales"), :].sum()
+pop_total_2009 = pop_m_2009 + pop_f_2009
 
 # pop_m_2020 = males_12_17.loc[(2020, "England and Wales"), :].sum()
 # pop_f_2020 = females_12_17.loc[(2020, "England and Wales"), :].sum()
@@ -116,9 +116,11 @@ pop_total_2008 = pop_m_2008 + pop_f_2008
 # print((378 / pop_total_2020) * 100000)
 
 cum_df = pd.DataFrame({
-    'pop_2009_12_17': [pop_total_2008, pop_f_2008, pop_m_2008],
+    'pop_2009_12_17': [pop_total_2009, pop_f_2009, pop_m_2009],
     'gnrha_gd_2009_2020': [2000, None, None],
-    'cum_rate_per_12_17_100k': [(2000 / pop_total_2008) * 100000, None, None]
+    'cum_rate_per_12_17_100k': [(2000 / pop_total_2009) * 100000, None, None],
+    'gnrha_gd_2009_2020_high': [2500, None, None],
+    'cum_rate_per_12_17_100k': [(2500 / pop_total_2009) * 100000, None, None],
     },
     index=["total", "female", "male"])
 
