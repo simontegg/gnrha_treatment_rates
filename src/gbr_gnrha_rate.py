@@ -120,7 +120,7 @@ cum_df = pd.DataFrame({
     'gnrha_gd_2009_2020': [2000, None, None],
     'cum_rate_per_12_17_100k': [(2000 / pop_total_2009) * 100000, None, None],
     'gnrha_gd_2009_2020_high': [2500, None, None],
-    'cum_rate_per_12_17_100k': [(2500 / pop_total_2009) * 100000, None, None],
+    'cum_rate_per_12_17_100k_high': [(2500 / pop_total_2009) * 100000, None, None],
     },
     index=["total", "female", "male"])
 
