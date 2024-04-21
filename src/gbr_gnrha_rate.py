@@ -119,7 +119,7 @@ cum_df = pd.DataFrame({
 
     'pop_2008_12_17': [pop_total_2008, pop_f_2008, pop_m_2008],
     'gnrha_gd_2008_2020_butler_cass': [851 + 727, None, None],
-    'cum_rate_per_12_17_100k_butler_cass': [(1578 / pop_total_2008) * 100000, None, None],
+    'cum_rate_per_12_17_100k_butler_cass': [((851 + 727) / pop_total_2008) * 100000, None, None],
     'gnrha_gd_2008_2020_barnes': [2000, None, None],
     'cum_rate_per_12_17_100k__barnes': [(2000 / pop_total_2008) * 100000, None, None],
     'gnrha_gd_2008_2020_high': [2500, None, None],
