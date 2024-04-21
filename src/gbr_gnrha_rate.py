@@ -121,7 +121,7 @@ cum_df = pd.DataFrame({
     'gnrha_gd_2008_2020_butler_cass': [851 + 727, None, None],
     'cum_rate_per_12_17_100k_butler_cass': [((851 + 727) / pop_total_2008) * 100000, None, None],
     'gnrha_gd_2008_2019_butler_cass': [1600, None, None],
-    'cum_rate_per_12_17_100k_butler_cass': [(1600 / pop_total_2008) * 100000, None, None],
+    'cum_rate_per_12_17_100k_butler_cass_round': [(1600 / pop_total_2008) * 100000, None, None],
     'gnrha_gd_2008_2020_barnes': [2000, None, None],
     'cum_rate_per_12_17_100k__barnes': [(2000 / pop_total_2008) * 100000, None, None],
     'gnrha_gd_2008_2020_high': [2500, None, None],
