@@ -105,8 +105,8 @@ females_12_17 = eng_wls.loc[
 
 
 
-pop_m_2008 = males_12_17.loc[(2009, "England and Wales"), :].sum()
-pop_f_2008 = females_12_17.loc[(2009, "England and Wales"), :].sum()
+pop_m_2008 = males_12_17.loc[(2008, "England and Wales"), :].sum()
+pop_f_2008 = females_12_17.loc[(2008, "England and Wales"), :].sum()
 pop_total_2008 = pop_m_2008 + pop_f_2008
 
 # pop_m_2020 = males_12_17.loc[(2020, "England and Wales"), :].sum()
