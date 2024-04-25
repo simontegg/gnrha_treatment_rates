@@ -91,7 +91,6 @@ df.to_csv(f"./results/{name}.csv", float_format="%.2f")
 styled = df.style.format(formatter=formatter)
 dfi.export(styled, f"results/{name}_table.png")
 
-print(eng_wls)
 
 males_12_17 = eng_wls.loc[
         (2008, "England and Wales"):(2020, "England and Wales"), 
@@ -99,9 +98,11 @@ males_12_17 = eng_wls.loc[
         ]
 
 females_12_17 = eng_wls.loc[
-        (2008, "England and Wales"):(2020, "England Wales"), 
+        (2008, "England and Wales"):(2020, "England and Wales"), 
         ("F", 12):("F", 17)
         ]
+
+
 
 
 
@@ -109,11 +110,11 @@ pop_m_2008 = males_12_17.loc[(2008, "England and Wales"), :].sum()
 pop_f_2008 = females_12_17.loc[(2008, "England and Wales"), :].sum()
 pop_total_2008 = pop_m_2008 + pop_f_2008
 
-# pop_m_2020 = males_12_17.loc[(2020, "England and Wales"), :].sum()
-# pop_f_2020 = females_12_17.loc[(2020, "England and Wales"), :].sum()
-# pop_total_2020 = pop_m_2020 + pop_f_2020
+pop_m_2020 = males_12_17.loc[(2020, "England and Wales"), :].sum()
+pop_f_2020 = females_12_17.loc[(2020, "England and Wales"), :].sum()
+pop_total_2020 = pop_m_2020 + pop_f_2020
 
-# print((378 / pop_total_2020) * 100000)
+print((378 / pop_total_2020) * 100000)
 
 cum_df = pd.DataFrame({
 
