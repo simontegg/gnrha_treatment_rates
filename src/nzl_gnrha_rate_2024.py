@@ -12,9 +12,9 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 statistic = "gnrha_rate"
-years = "2009_2023"
+years = "2011_2023"
 country = "nzl"
-name = f"latest_{country}_{statistic}_{years}"
+name = f"{country}_{statistic}_{years}"
 
 pop_source = 'DPE403902_20240317_124728_45.csv'
 gnrha_source = "2024-02-GnRH-Agonist-statistics.xlsx"
@@ -210,7 +210,7 @@ df = pd.DataFrame({
     'total_12_17': inc['males_12_17'] + inc['females_12_17'],
     })
 
-df["gd_cumulative_incidence"] = df["total_12_17"]["2010-01-01":].cumsum()
+df["gd_cumulative_incidence"] = df["total_12_17"]["2011-01-01":].cumsum()
 
 
 df["pop_12_17"] = pop_12_17.sum(axis=1)
