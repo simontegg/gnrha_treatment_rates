@@ -85,6 +85,7 @@ inc = pd.DataFrame({
 inc["total_12_17"] = inc["males_12_17"] + inc["females_12_17"]
 inc["total_0_11"] = inc["males_0_11"] + inc["females_0_11"]
 
+inc.to_csv(f"./results/inc_{name}.csv")
 
 prev = pd.DataFrame({
         'year': y_years,
