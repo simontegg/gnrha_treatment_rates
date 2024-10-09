@@ -227,7 +227,7 @@ df['pop_period_start_6_17_2017'] = df.loc["2017-01-01", "pop_6_17"]
 df['cum_inc_per_12_17_100k_2008'] = (df['gd_cumulative_incidence'] / df['pop_period_start_2008']) * 100000
 df['cum_inc_per_12_17_100k_2009'] = (df['gd_cumulative_incidence'] / df['pop_period_start_2009']) * 100000
 df['cum_inc_2017_2021'] = df.loc['2017-01-01':'2021-01-01', 'total_12_17'].cumsum()
-df['cum_inc_2019_2023'] = df.loc['2019-01-01':'2022-01-01', 'total_12_17'].cumsum()
+df['cum_inc_2019_2023'] = df.loc['2019-01-01':'2023-01-01', 'total_12_17'].cumsum()
 df['cum_inc_per_12_17_100k_2017'] = (df['cum_inc_2017_2021'] / df['pop_period_start_2017']) * 100000
 df['cum_inc_per_12_17_100k_2019'] = (df['cum_inc_2019_2023'] / df['pop_period_start_2019']) * 100000
 
